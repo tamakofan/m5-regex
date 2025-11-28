@@ -35,12 +35,12 @@ public class Main {
      * @return whether the string satisfies the password requirements
      */
     public static boolean checkForPassword(String str, int minLength) {
-        boolean propertyOne = Pattern.matches("[a-z]+[A-Z]+[0-9]+", str);
-        if (str.length() >= minLength) {
-            propertyOne = false;
-        }
+
         // as needed, modify this code.
-        return propertyOne;
+        return (str != null
+                && !str.isEmpty()
+                && str.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z0-9]+$")
+                && str.length() >= minLength);
     }
 
     // Method 2 for checking if a string conforms to a regex: using Matcher.find
@@ -51,6 +51,9 @@ public class Main {
      * @return a list containing the email addresses in the string.
      */
     public static List<String> extractEmails(String str) {
+        if (str == null) {
+            return new ArrayList<>();
+        }
         final Pattern pattern = Pattern.compile("[a-zA-Z0-9]+@(mail\\.utoronto\\.ca|utoronto\\.ca)");
         final Matcher matcher = pattern.matcher(str);
         final List<String> result = new ArrayList<>();
@@ -68,6 +71,6 @@ public class Main {
      * @return whether str contains the same capital letter twice.
      */
     public static boolean checkForDoubles(String str) {
-        return str.matches("[A-Z]\1");
+        return (str != null && !str.isEmpty() && str.matches(".*([A-Z]).*\\1.*"));
     }
 }
